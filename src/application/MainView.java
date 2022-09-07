@@ -14,7 +14,7 @@ public class MainView {
 		buildUI();
 		
 	}
-//ännu ett test
+
 	private void buildUI() {
 		
 		stage = new Stage(StageStyle.DECORATED);
