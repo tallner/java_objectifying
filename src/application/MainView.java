@@ -17,7 +17,6 @@ public class MainView {
 
 	private void buildUI() {
 		
-		
 		stage = new Stage(StageStyle.DECORATED);
 	
 		BorderPane root = new BorderPane();
