@@ -50,6 +50,7 @@ public class ProductView extends VBox {
 	private FileChooser fileChooser;
 	
 	private MyJSONparser myJSONparser;
+	private MyCSVparser myCSVparser;
 	
 	public ProductView() {
 		BuildUI();
@@ -175,7 +176,7 @@ public class ProductView extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				File selectedFile = fileChooser.showOpenDialog(null);
-	            readItemsFromFile(selectedFile.getAbsolutePath());   
+	            readItemsFromFile(selectedFile.getAbsolutePath());  
 			}
 		});
 		
@@ -221,15 +222,36 @@ public class ProductView extends VBox {
 	}
 	
 	private void readItemsFromFile(String filePath) {
+		String fileType = filePath.substring(filePath.indexOf('.')+1);
+		
+		if (!fileType.equals("xml") && !fileType.equals("csv") && !fileType.equals("json"))
+			return;
+		
 		ArrayList<Product> myProductList = new ArrayList<>();
 		myJSONparser = new MyJSONparser();
+		myCSVparser = new MyCSVparser();
 		
-		try {
-			myProductList = myJSONparser.readJSONfile(filePath);
-		} catch (ParseException | IOException e) {
-			e.printStackTrace();
+		switch (fileType) {
+			case "json" -> {
+				try {
+					myProductList = myJSONparser.readJSONfile(filePath);
+				} catch (ParseException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+			case "xml" -> {
+				//not yet implemented
+			}
+			
+			case "csv" -> {
+				myCSVparser.readCSVfile(filePath);
+				
+			}
+			
+			default ->
+				throw new IllegalArgumentException("Unexpected value: " + fileType);
 		}
-		
+			
 		for (Product product : myProductList) {
 			table.getItems().add(product);
 		}
