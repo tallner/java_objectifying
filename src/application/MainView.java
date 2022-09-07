@@ -10,8 +10,6 @@ public class MainView {
 	private Stage stage;
 	private ProductView productView;
 	
-	//private MyJSONparser myJSONparser;
-	
 	public MainView() {
 		buildUI();
 		
@@ -20,17 +18,11 @@ public class MainView {
 	private void buildUI() {
 		
 		
-		//MyJSONparser myJSONparser = new MyJSONparser();
-		//myJSONparser.writeJSONfile();
-		
 		stage = new Stage(StageStyle.DECORATED);
 	
 		BorderPane root = new BorderPane();
 		
 		productView = new ProductView();
-		
-		
-
 		
 		root.setCenter(productView);
 		
