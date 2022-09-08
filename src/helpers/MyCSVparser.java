@@ -2,6 +2,7 @@ package helpers;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import models.Product;
 
 public class MyCSVparser {
@@ -87,4 +89,32 @@ public class MyCSVparser {
 		return myProductList;
 	}
 
+	public void writeToCSVfile(ObservableList<Product> products, String filename) {
+		
+		String csvString = "";
+		
+		for (Product product : products) {
+			SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");  
+		    String strDate = formatter.format(product.getOrderDate());
+		    
+		    csvString +=
+		    		strDate + "," +
+		    		product.getItem().toString() + "," +
+		    		product.getRep1().toString() + "," +
+		    		product.getRep2().toString() + "," +
+		    		product.getRegion() + "," +
+		    		product.getUnits() + "," +
+		    		product.getUnitCost() + "," +
+		    		product.getTotal() + "\r\n";
+		    
+		}
+		//remove last ","
+		csvString = csvString.substring(0, csvString.length()-1);
+		
+		try (FileWriter file = new FileWriter("C:\\ProgrammingCourses\\grit\\avanceradjava\\objectifying\\src\\files\\"+filename+".csv")) {
+            file.write(csvString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 }

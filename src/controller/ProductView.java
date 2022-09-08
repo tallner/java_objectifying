@@ -221,7 +221,10 @@ public class ProductView extends VBox {
 	
 	private void writeItemsToFile(ObservableList<Product> products) {
 		myJSONparser = new MyJSONparser();
+		myCSVparser = new MyCSVparser();
+		
 		myJSONparser.writeJSONfile(products,"testFile");
+		myCSVparser.writeToCSVfile(products, "testFileCSV");
 	}
 	
 	private void readItemsFromFile(String filePath) {
@@ -247,7 +250,7 @@ public class ProductView extends VBox {
 			}
 			
 			case "csv" -> {
-				//not yet implemented
+				//not fully implemented
 				myProductList = myCSVparser.readCSVfile(filePath);
 				
 			}
