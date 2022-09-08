@@ -2,6 +2,7 @@ package application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
+import views.MainView;
 
 
 public class ObjectifyingAssignment extends Application {
@@ -14,6 +15,5 @@ public class ObjectifyingAssignment extends Application {
 	public void start(Stage primaryStage) {
 		new MainView();
 	}
-	
-	
+
 }

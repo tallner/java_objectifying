@@ -5,4 +5,5 @@ module fxtest {
 	requires json.simple;
 	
 	opens application to javafx.graphics, javafx.fxml, javafx.base;
+	opens models to javafx.base;
 }

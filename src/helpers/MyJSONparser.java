@@ -1,4 +1,4 @@
-package application;
+package helpers;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,6 +14,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javafx.collections.ObservableList;
+import models.Product;
 
 public class MyJSONparser  {
 	
@@ -52,7 +53,7 @@ public class MyJSONparser  {
 			list.add(obj);
 		}
 		
-        try (FileWriter file = new FileWriter("C:\\Users\\tallnerc\\eclipse-workspace\\fxtest\\src\\files\\"+filename+".json")) {
+        try (FileWriter file = new FileWriter("C:\\ProgrammingCourses\\grit\\avanceradjava\\objectifying\\src\\files\\"+filename+".json")) {
             file.write(list.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();

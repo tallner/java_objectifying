@@ -1,5 +1,6 @@
-package application;
+package views;
 
+import controller.ProductView;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -26,7 +27,7 @@ public class MainView {
 		root.setCenter(productView);
 		
 		Scene scene = new Scene(root,400,400);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
 		stage.setTitle("Display XML file in a table");
 		stage.setScene(scene);
 		stage.show();

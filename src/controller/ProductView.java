@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,6 +7,8 @@ import java.util.Date;
 
 import org.json.simple.parser.ParseException;
 
+import helpers.MyCSVparser;
+import helpers.MyJSONparser;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.LongStringConverter;
+import models.Product;
 
 public class ProductView extends VBox {
 	
