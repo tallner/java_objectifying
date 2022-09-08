@@ -3,13 +3,23 @@ package helpers;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+
+import models.Product;
 
 public class MyCSVparser {
 	
-	public void readCSVfile(String filePath) {
+	ArrayList<Product> myProductList;
+	Product myProduct;
+	
+	public ArrayList<Product> readCSVfile(String filePath) {
+		
+		myProductList = new ArrayList<>();
+		
 		List<List<String>> records = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 		    String line;
@@ -21,19 +31,84 @@ public class MyCSVparser {
 			e.printStackTrace();
 		}
 		
-		for (int i = 0; i < records.size(); i++) {
-			
+		List<String> labels = records.get(0);
+		
+		//from 1 so you not read labels again
+		for (int i = 1; i < records.size(); i++) {
+			myProduct = new Product();
+			String itemValue = "";
 			List<String> item = records.get(i);
 			
-			for (int j = 0; j < item.size(); j++) {
-				String content = item.get(j);
-				if (content.equals("?"))
-					item.set(j, item.get(j-1));
+			for (int j = 0; j < labels.size(); j++) {
+				
+				try {
+					itemValue = item.get(j);
+				}catch (IndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+
+				try {
+					switch (labels.get(j)) {
+						case "OrderDate" ->{
+							
+							String strDate = (String) itemValue;
+							Date date = null;
+							try {
+								date = new SimpleDateFormat("MM/dd/yyyy").parse(strDate);
+							} catch (java.text.ParseException e) {
+								e.printStackTrace();
+							}
+							
+							myProduct.setOrderDate(date);
+							
+						}
+						
+						case "Region" ->{
+							myProduct.setRegion(itemValue);
+						}
+						
+						case "Rep1" ->{
+							myProduct.setRep1(itemValue);
+						}
+						
+						case "Rep2" ->{
+							myProduct.setRep2(itemValue);
+						}
+						
+						case "Item" ->{
+							myProduct.setItem(itemValue);
+						}
+						
+						case "Units" ->{
+							myProduct.setUnits(Long.parseLong(itemValue));
+						}
+						
+						case "UnitCost" ->{
+							myProduct.setUnitCost(Float.parseFloat(itemValue));
+						}
+						
+						case "Total" ->{
+							myProduct.setTotal(Float.parseFloat(itemValue));
+						}
+						
+						
+						default ->
+						throw new IllegalArgumentException("Unexpected value: " + itemValue);
+					}
+				}
+				catch (NumberFormatException ne) {
+					ne.printStackTrace();
+				}
 			}
-			
-			System.out.println(item);
+			myProductList.add(myProduct);
 			
 		}
+		
+		for (Product product : myProductList) {
+			System.out.println(product.toString());
+		}
+		
+		return myProductList;
 	}
 
 }

@@ -247,7 +247,8 @@ public class ProductView extends VBox {
 			}
 			
 			case "csv" -> {
-				myCSVparser.readCSVfile(filePath);
+				//not yet implemented
+				myProductList = myCSVparser.readCSVfile(filePath);
 				
 			}
 			
