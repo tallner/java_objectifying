@@ -58,42 +58,18 @@ public class MyCSVparser {
 							} catch (java.text.ParseException e) {
 								e.printStackTrace();
 							}
-							
 							myProduct.setOrderDate(date);
-							
 						}
 						
-						case "Region" ->{
-							myProduct.setRegion(itemValue);
-						}
-						
-						case "Rep1" ->{
-							myProduct.setRep1(itemValue);
-						}
-						
-						case "Rep2" ->{
-							myProduct.setRep2(itemValue);
-						}
-						
-						case "Item" ->{
-							myProduct.setItem(itemValue);
-						}
-						
-						case "Units" ->{
-							myProduct.setUnits(Long.parseLong(itemValue));
-						}
-						
-						case "UnitCost" ->{
-							myProduct.setUnitCost(Float.parseFloat(itemValue));
-						}
-						
-						case "Total" ->{
-							myProduct.setTotal(Float.parseFloat(itemValue));
-						}
-						
-						
+						case "Region" ->myProduct.setRegion(itemValue);
+						case "Rep1" ->myProduct.setRep1(itemValue);
+						case "Rep2" ->myProduct.setRep2(itemValue);
+						case "Item" ->myProduct.setItem(itemValue);
+						case "Units" ->myProduct.setUnits(Long.parseLong(itemValue));
+						case "UnitCost" ->myProduct.setUnitCost(Float.parseFloat(itemValue));
+						case "Total" ->myProduct.setTotal(Float.parseFloat(itemValue));
 						default ->
-						throw new IllegalArgumentException("Unexpected value: " + itemValue);
+							throw new IllegalArgumentException("Unexpected value: " + itemValue);
 					}
 				}
 				catch (NumberFormatException ne) {
