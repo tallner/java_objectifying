@@ -42,9 +42,7 @@ public class ProductView extends VBox {
 	private TableColumn<Product, Float> unitCostColumn;
 	private TableColumn<Product, Float> totalCostColumn;
 	
-	private TextField item;
-	private TextField rep1, rep2;
-	private TextField nrUnits;
+	private TextField orderDate,region, rep1, rep2, nrUnits, unitCost, item;
 	
 	private Button btnAdd;
 	private Button btnDel;
@@ -118,22 +116,37 @@ public class ProductView extends VBox {
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		table.setPrefHeight(1000);
 		
+		//private TextField orderDate,region, rep1, rep2, nrUnits, unitCost, item;
 		
+		orderDate = new TextField();
+		orderDate.setPromptText("Order date");
+		
+		region = new TextField();
+		region.setPromptText("Region");
+		
+		rep1 = new TextField();
+		rep1.setPromptText("Rep1");
+		
+		rep2 = new TextField();
+		rep2.setPromptText("Rep2");
+		
+		nrUnits = new TextField();
+		nrUnits.setPromptText("Nr of units");
+		
+		unitCost = new TextField();
+		unitCost.setPromptText("Cost per units");
+				
 		item = new TextField();
 		item.setPromptText("Item name");
 		item.setTooltip(new Tooltip("Enter item name"));
-		rep1 = new TextField();
-		rep1.setPromptText("Rep1");
-		rep2 = new TextField();
-		rep2.setPromptText("Rep2");
-		nrUnits = new TextField();
-		nrUnits.setPromptText("Nr of units");
+		
+		
 		
 		HBox hbox1 = new HBox();
 		hbox1.setSpacing(10);
 		hbox1.setPadding(new Insets(10,10,10,10));
-		hbox1.getChildren().addAll(item,rep1,rep2,nrUnits);
-		hbox1.setAlignment(Pos.BOTTOM_LEFT);
+		hbox1.getChildren().addAll(orderDate,region, rep1, rep2, nrUnits, unitCost, item);
+		hbox1.setAlignment(Pos.TOP_LEFT);
 		
 		
 		btnAdd = new Button("Add");
@@ -171,7 +184,7 @@ public class ProductView extends VBox {
 		hbox2.setSpacing(10);
 		hbox2.setPadding(new Insets(0,10,10,10));
 		hbox2.getChildren().addAll(btnAdd,btnDel);
-		hbox2.setAlignment(Pos.BOTTOM_LEFT);
+		hbox2.setAlignment(Pos.TOP_RIGHT);
 		
 		
 		fileChooser = new FileChooser();
@@ -214,7 +227,7 @@ public class ProductView extends VBox {
 		hbox3.setSpacing(10);
 		hbox3.setPadding(new Insets(0,10,10,10));
 		hbox3.getChildren().addAll(btnSelFile, btnSaveToFile);
-		hbox3.setAlignment(Pos.TOP_RIGHT);
+		hbox3.setAlignment(Pos.BOTTOM_RIGHT);
 		
 		getChildren().addAll(table,hbox1,hbox2,hbox3);
 	}
