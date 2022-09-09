@@ -2,8 +2,10 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import org.json.simple.parser.ParseException;
 
@@ -116,10 +118,9 @@ public class ProductView extends VBox {
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		table.setPrefHeight(1000);
 		
-		//private TextField orderDate,region, rep1, rep2, nrUnits, unitCost, item;
-		
 		orderDate = new TextField();
-		orderDate.setPromptText("Order date");
+		orderDate.setPromptText("Date MM/dd/yyyy");
+		Pattern DATE_PATTERN = Pattern.compile("^\\d{2}/\\d{2}/\\d{4}$");
 		
 		region = new TextField();
 		region.setPromptText("Region");
@@ -154,15 +155,27 @@ public class ProductView extends VBox {
 		btnAdd.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				//set date if pattern matches
+				Date date = null;
+				if (DATE_PATTERN.matcher(orderDate.getText()).matches())
+					try {
+						date = new SimpleDateFormat("dd/MM/yyyy").parse(orderDate.getText());
+					} catch (java.text.ParseException e) {
+						e.printStackTrace();
+					}
+				else //if pattern does not match, set current date
+					date = new Date();
+					
+				
 				Product product = new Product(
-							new Date(), 
-							"Skåne", 
+							date, 
+							region.getText(), 
 							rep1.getText(),
 							rep2.getText(),
 							item.getText(), 
 							Integer.parseInt(nrUnits.getText()), 
-							3.45f,
-							99.87f
+							Float.parseFloat(unitCost.getText()),
+							Integer.parseInt(nrUnits.getText())*Float.parseFloat(unitCost.getText())
 						);
 				add(product);
 				clearTextFields();
@@ -248,6 +261,9 @@ public class ProductView extends VBox {
 		rep1.clear();
 		rep2.clear();
 		nrUnits.clear();
+		orderDate.clear();
+		region.clear();
+		unitCost.clear();
 	}
 	
 	private void writeItemsToFile(ObservableList<Product> products, File file) {
