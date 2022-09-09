@@ -30,7 +30,7 @@ public class MyJSONparser  {
 	public MyJSONparser() {
 	}
 	
-	public void writeJSONfile(ObservableList<Product> products, String filename) {
+	public void writeJSONfile(ObservableList<Product> products, String filePath) {
 		
 		JSONArray list = new JSONArray();
         
@@ -53,7 +53,7 @@ public class MyJSONparser  {
 			list.add(obj);
 		}
 		
-        try (FileWriter file = new FileWriter("C:\\ProgrammingCourses\\grit\\avanceradjava\\objectifying\\src\\files\\"+filename+".json")) {
+        try (FileWriter file = new FileWriter(filePath)) {
             file.write(list.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();

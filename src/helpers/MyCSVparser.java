@@ -89,7 +89,7 @@ public class MyCSVparser {
 		return myProductList;
 	}
 
-	public void writeToCSVfile(ObservableList<Product> products, String filename) {
+	public void writeToCSVfile(ObservableList<Product> products, String filePath) {
 		
 		String csvString = "";
 		
@@ -109,9 +109,10 @@ public class MyCSVparser {
 		    
 		}
 		//remove last ","
-		csvString = csvString.substring(0, csvString.length()-1);
+		if (csvString.length() > 0)
+			csvString = csvString.substring(0, csvString.length()-1);
 		
-		try (FileWriter file = new FileWriter("C:\\ProgrammingCourses\\grit\\avanceradjava\\objectifying\\src\\files\\"+filename+".csv")) {
+		try (FileWriter file = new FileWriter(filePath)) {
             file.write(csvString);
         } catch (IOException e) {
             e.printStackTrace();

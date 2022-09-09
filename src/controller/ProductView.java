@@ -25,6 +25,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.LongStringConverter;
 import models.Product;
@@ -115,6 +116,7 @@ public class ProductView extends VBox {
 		table.getColumns().add(totalCostColumn);
 		
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		table.setPrefHeight(1000);
 		
 		
 		item = new TextField();
@@ -131,6 +133,7 @@ public class ProductView extends VBox {
 		hbox1.setSpacing(10);
 		hbox1.setPadding(new Insets(10,10,10,10));
 		hbox1.getChildren().addAll(item,rep1,rep2,nrUnits);
+		hbox1.setAlignment(Pos.BOTTOM_LEFT);
 		
 		
 		btnAdd = new Button("Add");
@@ -168,11 +171,17 @@ public class ProductView extends VBox {
 		hbox2.setSpacing(10);
 		hbox2.setPadding(new Insets(0,10,10,10));
 		hbox2.getChildren().addAll(btnAdd,btnDel);
-		hbox2.setAlignment(Pos.TOP_RIGHT);
+		hbox2.setAlignment(Pos.BOTTOM_LEFT);
 		
 		
 		fileChooser = new FileChooser();
-		btnSelFile = new Button("File");
+		fileChooser.getExtensionFilters().addAll(
+        		new FileChooser.ExtensionFilter("All Files", "*.*"),
+        		new FileChooser.ExtensionFilter("CSV", "*.csv"),
+        		new FileChooser.ExtensionFilter("JSON", "*.json")	            		
+        		);
+	      
+		btnSelFile = new Button("Open");
 		btnSelFile.setPrefWidth(100);		
 		btnSelFile.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -188,7 +197,16 @@ public class ProductView extends VBox {
 		btnSaveToFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				writeItemsToFile(table.getItems());				
+				
+	            //Show save file dialog
+	            File file = fileChooser.showSaveDialog(null);
+	 
+	            if (file != null) {
+	                writeItemsToFile(table.getItems(),file);
+	            }
+	            
+	            
+								
 			}
 		});
 		
@@ -219,12 +237,26 @@ public class ProductView extends VBox {
 		nrUnits.clear();
 	}
 	
-	private void writeItemsToFile(ObservableList<Product> products) {
+	private void writeItemsToFile(ObservableList<Product> products, File file) {
 		myJSONparser = new MyJSONparser();
 		myCSVparser = new MyCSVparser();
 		
-		myJSONparser.writeJSONfile(products,"testFile");
-		myCSVparser.writeToCSVfile(products, "testFileCSV");
+		//check extension
+		String fileName = file.getName();
+		int indexOfDot = fileName.indexOf('.');
+		String extension = file.getName().substring(indexOfDot+1);
+		String filePath = file.getPath();
+		
+		switch (extension) {
+			case "csv" -> myCSVparser.writeToCSVfile(products, filePath);
+			case "json" -> myJSONparser.writeJSONfile(products,filePath);
+
+			default ->
+				throw new IllegalArgumentException("Unexpected extension: " + extension);
+		}
+		
+		
+		
 	}
 	
 	private void readItemsFromFile(String filePath) {
